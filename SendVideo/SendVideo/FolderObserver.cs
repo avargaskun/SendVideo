@@ -6,8 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-using static System.Console;
-
 namespace SendVideo
 {
     public class FolderObserver
@@ -65,7 +63,7 @@ namespace SendVideo
             }
             catch (Exception e)
             {
-                Log.Debug($"Failed to process file: {input} with {e.GetType().Name}: {e.Message}");
+                Log.Warning($"Failed to process file: {input} with {e.GetType().Name}: {e.Message}");
                 return;
             }
 
@@ -75,7 +73,7 @@ namespace SendVideo
             }
             catch (Exception e)
             {
-                Log.Debug($"Failed to send video to {recipient.Name} with {e.GetType().Name}: {e.Message}");
+                Log.Warning($"Failed to send video to {recipient.Name} with {e.GetType().Name}: {e.Message}");
                 return;
             }
             finally
@@ -83,7 +81,7 @@ namespace SendVideo
                 video.Delete();
             }
 
-            Log.Debug($"Video successfully sent to {recipient.Name} ({recipient.Address})");
+            Log.Info($"Video successfully sent to {recipient.Name} ({recipient.Address})");
         }
 
         private static async Task<FileStream> LockFileAsync(string path)

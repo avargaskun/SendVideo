@@ -30,6 +30,7 @@
         {
             this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
             this.serviceInstaller1 = new System.ServiceProcess.ServiceInstaller();
+            this.eventLogInstaller1 = new System.Diagnostics.EventLogInstaller();
             // 
             // serviceProcessInstaller1
             // 
@@ -42,6 +43,11 @@
             this.serviceInstaller1.Description = "Detects new video files, encodes them and sends them to selected recipients";
             this.serviceInstaller1.ServiceName = "SendVideo";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
+            //
+            // eventLogInstaller1
+            //
+            this.eventLogInstaller1.Log = "Application";
+            this.eventLogInstaller1.Source = "SendVideo";
             // 
             // ProjectInstaller
             // 
@@ -55,5 +61,6 @@
 
         private System.ServiceProcess.ServiceProcessInstaller serviceProcessInstaller1;
         private System.ServiceProcess.ServiceInstaller serviceInstaller1;
+        private System.Diagnostics.EventLogInstaller eventLogInstaller1;
     }
 }

@@ -28,10 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.EventLog = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.EventLog)).BeginInit();
+            // 
+            // EventLog
+            // 
+            this.EventLog.Log = "Application";
+            this.EventLog.Source = "SendVideo";
+            // 
+            // Service
+            // 
             this.ServiceName = "SendVideo";
+            ((System.ComponentModel.ISupportInitialize)(this.EventLog)).EndInit();
+
         }
 
         #endregion
+
+        private System.Diagnostics.EventLog EventLog;
     }
 }

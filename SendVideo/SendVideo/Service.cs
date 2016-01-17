@@ -10,6 +10,11 @@ namespace SendVideo
 {
     public partial class Service : ServiceBase
     {
+        public Service()
+        {
+            this.InitializeComponent();
+        }
+
         public static void Install()
         {
             ManagedInstallerClass.InstallHelper(new[] { Assembly.GetExecutingAssembly().Location });
@@ -22,7 +27,6 @@ namespace SendVideo
 
         public void RunLocal(string[] args)
         {
-            Log.Out = Console.Out;
             this.OnStart(args);
             Console.WriteLine("Press a key to exit ...");
             Console.ReadKey();
@@ -31,14 +35,15 @@ namespace SendVideo
 
         protected override void OnStart(string[] args)
         {
-            Log.Debug("SendVideo service starting ...");
+            Log.EventLog = this.EventLog;
+            Log.Info("SendVideo service starting ...");
 
             try
             {
                 var configuration = ConfigurationManager.GetSection("sendVideo") as SendVideoSection;
                 if (configuration == null)
                 {
-                    Log.Debug("Configuration section not found!");
+                    throw new ApplicationException("Section 'sendVideo' not found in application configuration file!");
                 }
 
                 var encoder = new Encoder(configuration.Handbrake);
@@ -51,14 +56,14 @@ namespace SendVideo
             }
             catch (Exception e)
             {
-                Log.Debug($"Could not start service with {e.GetType().Name}: {e.Message}");
-                throw;
+                Log.Error($"Could not start service with {e.GetType().Name}: {e.Message}");
+                return;
             }
         }
 
         protected override void OnStop()
         {
-            Log.Debug("SendVideo service stopping ...");
+            Log.Info("SendVideo service stopping ...");
         }
     }
 }

@@ -21,7 +21,7 @@ namespace SendVideo
             }
 
             this.handbrakeArguments = configuration.Arguments ?? string.Empty;
-            Log.Debug($"Using handbrake at: {this.handbrakePath}");
+            Log.Info($"Using handbrake at: {this.handbrakePath}");
         }
 
         public async Task<FileInfo> Encode(string input)
@@ -58,7 +58,7 @@ namespace SendVideo
                 }
                 else
                 {
-                    Log.Debug($"{process.StartInfo.FileName} {process.StartInfo.Arguments}\n{process.StandardOutput.ReadToEnd()}");
+                    Log.Warning($"{process.StartInfo.FileName} {process.StartInfo.Arguments} exited with {process.ExitCode}");
                     tcs.TrySetException(new ApplicationException($"Handbrake process exited with error code: {process.ExitCode}"));
                 }
             };
